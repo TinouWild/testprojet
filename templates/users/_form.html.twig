@@ -1,0 +1,9 @@
+{{ form_start(form) }}
+    {{ form_row(form.name) }}
+    {{ form_row(form.lastname) }}
+    {{ form_row(form.mail) }}
+    {{ form_row(form.phone) }}
+    {{ form_row(form.password) }}
+    {{ form_row(form.confirm_password) }}
+    <button class="btn">{{ button_label|default('Save') }}</button><button class="btn" href="{{ path('users_index') }}">Back to list</button>
+{{ form_end(form) }}

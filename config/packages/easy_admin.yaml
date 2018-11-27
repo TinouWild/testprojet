@@ -1,0 +1,11 @@
+easy_admin:
+    design:
+        brand-color: 'lightblue'
+    entities:
+        # List the entity class name you want to manage
+        Users:
+            class: App\Entity\Users
+        Category:
+            class: App\Entity\Category
+        Event:
+            class: App\Entity\Event

@@ -5,11 +5,16 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UsersRepository")
+ *
  */
-class Users
+class Users implements UserInterface
 {
     /**
      * @ORM\Id()
@@ -40,11 +45,18 @@ class Users
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Length(min="8", minMessage="Votre mot de passe doit contenir 8 caractères")
      */
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @Assert\EqualTo(propertyPath="password", message="Votre mot de passe n'est pas identique")
+     */
+
+    public $confirm_password;
+
+    /**
+     * @ORM\Column(type="json", length=255, nullable=true)
      */
     private $role;
 
@@ -164,5 +176,17 @@ class Users
         }
 
         return $this;
+    }
+
+    public function eraseCredentials() {}
+
+    public function getSalt() {}
+
+    public function getUsername() {}
+
+    public function getRoles()
+    {
+        $roles = $this->role;
+        return ['ROLE_USER'];
     }
 }
